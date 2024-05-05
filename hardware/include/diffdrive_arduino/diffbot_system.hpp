@@ -23,10 +23,7 @@
 #include "hardware_interface/hardware_info.hpp"
 #include "hardware_interface/system_interface.hpp"
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
-#include "rclcpp/clock.hpp"
-#include "rclcpp/duration.hpp"
 #include "rclcpp/macros.hpp"
-#include "rclcpp/time.hpp"
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 #include "diffdrive_arduino/visibility_control.h"
@@ -34,6 +31,7 @@
 #include "diffdrive_arduino/arduino_comms.hpp"
 #include "diffdrive_arduino/wheel.hpp"
 
+using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 namespace diffdrive_arduino
 {
 class DiffDriveArduinoHardware : public hardware_interface::SystemInterface
@@ -59,8 +57,7 @@ public:
   RCLCPP_SHARED_PTR_DEFINITIONS(DiffDriveArduinoHardware);
 
   DIFFDRIVE_ARDUINO_PUBLIC
-  hardware_interface::CallbackReturn on_init(
-    const hardware_interface::HardwareInfo & info) override;
+  CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
 
   DIFFDRIVE_ARDUINO_PUBLIC
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
@@ -69,29 +66,22 @@ public:
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
   DIFFDRIVE_ARDUINO_PUBLIC
-  hardware_interface::CallbackReturn on_configure(
-    const rclcpp_lifecycle::State & previous_state) override;
+  CallbackReturn on_configure(const rclcpp_lifecycle::State & previous_state) override;
 
   DIFFDRIVE_ARDUINO_PUBLIC
-  hardware_interface::CallbackReturn on_cleanup(
-    const rclcpp_lifecycle::State & previous_state) override;
-
+  CallbackReturn on_cleanup(const rclcpp_lifecycle::State & previous_state) override;
 
   DIFFDRIVE_ARDUINO_PUBLIC
-  hardware_interface::CallbackReturn on_activate(
-    const rclcpp_lifecycle::State & previous_state) override;
+  CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
 
   DIFFDRIVE_ARDUINO_PUBLIC
-  hardware_interface::CallbackReturn on_deactivate(
-    const rclcpp_lifecycle::State & previous_state) override;
+  CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
 
   DIFFDRIVE_ARDUINO_PUBLIC
-  hardware_interface::return_type read(
-    const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  hardware_interface::return_type read() override;
 
   DIFFDRIVE_ARDUINO_PUBLIC
-  hardware_interface::return_type write(
-    const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  hardware_interface::return_type write() override;
 
 private:
 
